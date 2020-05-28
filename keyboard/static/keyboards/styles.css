@@ -1,0 +1,26 @@
+.keyboard_element{
+    margin: 5px;
+}
+
+.btm-text{
+    text-align: center;
+    margin-top: auto;
+}
+.switches{
+    height: 120px;
+    width: 120px;
+}
+.nav-link{
+    font-size: 20px;
+}
+.welcome{
+    top: 10px;
+}
+.carousel-size{
+    width: 400px;
+    height: 250px;
+}
+.card-keyboard{
+    height: 400px;
+    margin: 5px;
+}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {%for brand in brands%}
+    <div class="card col-md-3 keyboard_element">
+        <a href="{% url 'detail_brand' brand.id %}">
+            <img src="{{brand.logo.url}}" class = "card-img-top">
+            <div class="card-body">
+                <p class = "btm-text card-title">{{brand}}</p>
+            </div>
+        </a>
+    </div>
+    {%endfor%}
+{% endblock %}

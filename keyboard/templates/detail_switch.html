@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row item_keyboard">
+        <div class="col-lg-6">
+            <div class="keyboard-switch">
+                <img src="{{switch.image.url}}" alt="">
+                <p>{{switch.name}}</p>
+                <p>{{switch.type}}</p>
+                <p>{{switch.force}}N</p>
+                <img class="switches" src="{{keyboard.switches.all.0.image.url}}" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock %}

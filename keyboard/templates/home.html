@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{error}}
+    <div class="card row">
+        <p>sort by: </p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary" name="price" value="price">price</button>
+            <button type="submit" class="btn btn-secondary" name="rating" value="rating">rating</button>
+            <button type="submit" class="btn btn-secondary" name="date" value="date">date</button>
+        </form>
+    </div>
+    <div class="row"style="justify-content:center">
+    {% for keyboard in keyboards %}
+        <div class="card col-md-3 keyboard_element ">
+            <a href="{% url 'detail_keyboard' keyboard.id %}">
+                <img src="{{keyboard.images.all.1.image.url}}" width="300" height="200">
+            <div class="card-body">
+                <h4 class = "card-title mb-1">{{keyboard.brand_name}}</h4>
+                <h5 class = "card-title">{{keyboard.model_name}}</h5>
+                <p class = "btm-text card-title">{{keyboard.price}} KZT</p>
+            </div>
+            </a>
+        </div>
+    {%endfor%}
+    </div>
+
+{% endblock %}

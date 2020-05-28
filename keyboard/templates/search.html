@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{match_error}}
+    <div class="card row">
+        <form method="post">
+        {% csrf_token %}
+            <select id="switches" name="switches" size="{{switches|length}}" multiple>
+                {% for switch in switches %}
+                    <option name="switches[switch.id]" value="{{switch.name}}">{{switch.name}}</option>
+                {% endfor %}
+            </select><br><br>
+            <select id="brands" name="brands" size="{{brands|length}}" multiple>
+                {% for brand in brands %}
+                    <option name="brands[brand.id]"value="{{brand.name}}">{{brand.name}}</option>
+                {% endfor %}
+            </select><br><br>
+            <div class="group">
+                <label for="priceMin">minimum </label>
+                <input type="number" name="priceMin">
+                <label for="priceMax">maximum </label>
+                <input type="number" name="priceMax">
+            </div>
+            <div class="">
+                <input type="text" name="keyboard_name">
+            </div>
+            <input type="submit" value="search">
+
+        </form>
+
+    </div>
+    <div class="row"style="justify-content:center">
+    {% for keyboard in keyboards %}
+        <div class="card col-md-3 keyboard_element ">
+            <a href="{% url 'detail_keyboard' keyboard.id %}">
+                <img src="{{keyboard.images.all.1.image.url}}" width="300" height="200">
+            <div class="card-body">
+                <h4 class = "card-title mb-1">{{keyboard.brand_name}}</h4>
+                <h5 class = "card-title">{{keyboard.model_name}}</h5>
+                <p class = "btm-text card-title">{{keyboard.price}} KZT</p>
+            </div>
+            </a>
+        </div>
+    {%endfor%}
+    </div>
+
+{% endblock %}

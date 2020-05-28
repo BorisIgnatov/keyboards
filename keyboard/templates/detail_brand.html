@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class=" text-center">{{ brand.name }}</h1>
+    <div class="" style="justify-content:center ">
+        <div class="col-sm-4 card border-warning ">
+            {% for keyboard in keyboards%}
+                <img src="{{ keyboard.images.all.0.image.url }}" class="card-keyboard card-img-top">
+                <div class="card-body">
+                    <p class="card-title">{{ keyboard }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

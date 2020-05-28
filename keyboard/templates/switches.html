@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {%for switch in switches%}
+    <div class="card col-md-3 keyboard_element">
+            <img src="{{switch.image.url}}" class = "card-img-top">
+            <div class="card-body">
+                <p class = "btm-text card-title">{{switch}}</p>
+            </div>
+    </div>
+    {%endfor%}
+{% endblock %}
