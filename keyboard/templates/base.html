@@ -26,10 +26,13 @@
                         <a class="nav-link" href="{% url 'brands' %}">Brands</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'switches' %}">Switches</a>
+                        <a class="nav-link" href="{% url 'search' %}">Search</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'search' %}">Search</a>
+                        <form class="" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="logout">logout</button>
+                        </form>
                     </li>
         </ul>
         <p class="welcome"> Welcome {{request.user}}</p>

@@ -17,19 +17,19 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from keyboard import views
+from keyboard.views import *
+from users.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home,name='home'),
-    path('signup', views.signup_page,name='signup'),
-    path('login', views.login_page,name='login'),
-    path('brands', views.brands,name='brands'),
-    path('switches', views.switches,name='switches'),
-    path('keyboards/<int:keyboard_id>', views.detail_keyboard,name='detail_keyboard'),
-    path('brands/<int:brand_id>', views.detail_brand,name='detail_brand'),
-    path('switches/<str:switch_name>', views.detail_switch,name='detail_switch'),
-    path('search', views.search,name='search'),
-]
+    path('', home,name='home'),
+    path('signup', signup_page,name='signup'),
+    path('login', login_page,name='login'),
+    path('logout', logout_view,name='logout'),
+    path('brands', brands,name='brands'),
+    path('keyboards/<int:keyboard_id>', detail_keyboard,name='detail_keyboard'),
+    path('brands/<int:brand_id>', detail_brand,name='detail_brand'),
+    path('search', search,name='search'),
+    ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

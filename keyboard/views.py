@@ -4,37 +4,8 @@ from django.db import IntegrityError
 from django.db.models import Avg
 from django.contrib.auth import login, logout, authenticate
 from .models import *
-
-
-def signup_page(request):
-    if request.method == 'GET':
-        return render(request,'signup.html')
-    elif request.method == 'POST':
-        if request.POST['password'] == request.POST['password_confirmation']:
-            try:
-                user = User.objects.create_user(request.POST['email'],
-                                                password=request.POST['password'],
-                                                first_name=request.POST['first_name'],
-                                                last_name=request.POST['last_name'])
-                user.save()
-                login(request,user)
-                return redirect(home)
-            except IntegrityError:
-                return render(request,'signup.html',{'error':'This email is already used'})
-        else:
-            return render(request,'signup.html',{'error':'Passwords are not matching'})
-
-
-def login_page(request):
-    if request.method == 'GET':
-        return render(request,'login.html')
-    elif request.method == 'POST':
-        user = authenticate(request, username=request.POST['email'], password=request.POST['password'])
-        if user is None:
-            return render(request, 'login.html', {'error':'Username and password did not match'})
-        else:
-            login(request, user)
-            return redirect(home)
+from .services.review import review
+from .services.search import search
 
 
 def home(request):
@@ -81,32 +52,21 @@ def detail_keyboard(request,keyboard_id):
                                                       'neg_count':neg_count})
     elif request.method == 'POST':
         if request.user:
-            review = Review(user=request.user,keyboard=keyboard,
-                            rating=request.POST.get('rating'),
-                            content=request.POST.get('content'),
-                            is_positive=request.POST.get('is_positive') == 'True')
-
-            review.save()
+            review(request, keyboard)
             keyboard.rating = reviews.aggregate(Avg('rating'))['rating__avg']
-            keyboard.save()
             return render(request, 'detail_keyboard.html',{'keyboard':keyboard,
-                                                            'reviews':reviews,
-                                                            'count':reviews_count,
-                                                            'pos_count':pos_count,
-                                                            'neg_count':neg_count})
+                                                          'reviews':reviews,
+                                                          'count':reviews_count,
+                                                          'pos_count':pos_count,
+                                                          'neg_count':neg_count})
         else:
-            redirect(signup)
+            redirect('signup_page')
 
 
 def detail_brand(request,brand_id):
     brand = get_object_or_404(Brand,pk=brand_id)
     keyboards = Keyboard.objects.filter(brand_name=brand)
     return render(request, 'detail_brand.html',{'brand':brand, 'keyboards':keyboards})
-
-
-def detail_switch(request,switch_name):
-    switch = get_object_or_404(Switch,name=switch_name)
-    return render(request, 'detail_switch.html',{'switch':switch})
 
 
 def search(request):
@@ -150,8 +110,7 @@ def search(request):
             return render(request,'search.html',
                          {'keyboards':keyboards.all(),
                          'switches':switches.all(),
-                         'brands':brands.all(),
-                         'match_error':match_error})
+                         'brands':brands.all()})
         except Exception as e:
             return render(request,'search.html',{'keyboards':keyboards.all(),
                                                 'switches':switches.all(),
