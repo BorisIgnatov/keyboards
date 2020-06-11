@@ -29,7 +29,7 @@ urlpatterns = [
     path('brands', brands,name='brands'),
     path('keyboards/<int:keyboard_id>', detail_keyboard,name='detail_keyboard'),
     path('brands/<int:brand_id>', detail_brand,name='detail_brand'),
-    path('search', search,name='search'),
+    path('search/', search, name='search'),
     ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -82,14 +82,12 @@ def search(request):
             if request.POST.get('switches'):
                 key_list = Brand.objects.none()
                 for i in request.POST.getlist('switches'):
-                    key_list = key_list | keyboards.filter(switches__name__contains=i)
-                keyboards = key_list
+                    keyboards = keyboards.filter(switches__name__contains=i)
 
             if request.POST.get('brands'):
                 key_list = Brand.objects.none()
                 for i in request.POST.getlist('brands'):
-                    key_list = key_list | keyboards.filter(brand_name__name__contains=i)
-                keyboards = key_list
+                    keyboards = keyboards.filter(brand_name__name__contains=i)
 
             if request.POST.get('priceMin'):
                 min = request.POST.get('priceMin')
@@ -101,9 +99,7 @@ def search(request):
 
             if request.POST.get('keyboard_name'):
                 try:
-                    key_list = Brand.objects.none()
-                    key_list = key_list | keyboards.filter(model_name__icontains=request.POST.get('keyboard_name'))
-                    keyboards = key_list
+                    keyboards = keyboards.filter(model_name__icontains=request.POST.get('keyboard_name'))
                 except Exception as e:
                     match_error = e
 
